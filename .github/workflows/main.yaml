@@ -112,7 +112,7 @@ jobs:
           script: |
             whoami
            
-            sudo python3 pip install .
+            sudo  pip install .
           
         
               
