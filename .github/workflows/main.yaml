@@ -98,7 +98,7 @@ jobs:
 
           eval `ssh-agent`
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY}}"
-          scp   -r ./* ec2-user@${{needs.terraform_deploy.outputs.outputs1}}:/home/ec2-user/
+          scp   -r ./* ec2-user@${{needs.terraform_deploy.outputs.output1}}:/home/ec2-user/
     
-          ssh   ec2-user@${{needs.terraform_deploy.outputs.outputs1}} -f ' python setup.py install'
+          ssh   ec2-user@${{needs.terraform_deploy.outputs.output1}} -f ' python setup.py install'
           
