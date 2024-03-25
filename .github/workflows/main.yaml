@@ -95,12 +95,25 @@ jobs:
           name: my_flask_app_package
           path: artifacts/
 
-      - name: Deploy code to EC2
-        run: |
-
-          eval `ssh-agent`
-          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY}}"
-          scp   -r ./* ec2-user@${{needs.terraform_deploy.outputs.output1}}:/home/ec2-user/
-    
-          ssh   ec2-user@${{needs.terraform_deploy.outputs.output1}} -f ' python setup.py install'
+      - name: deploy copy to ec2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ needs.terraform_deploy.outputs.output1 }}
+          username: ec2_user
+          key: ${{  secrets.SSH_PRIVATE_KEY}}
+          port: 22
+          source: .
+          target: app
+      - name: depoly ec2 
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{needs.terraform_deploy.outputs.output1}}
+          username: ec2_user
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd app
+            python setup.py install
           
+        
+              
