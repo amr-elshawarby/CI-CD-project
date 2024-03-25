@@ -11,6 +11,8 @@ jobs:
   terraform_deploy:
     runs-on: ubuntu-latest
     name: Provision EC2 with Terraform
+    outputs:
+      output1: ${{ steps.ip_address.output.ip }}
 
     steps:
       - name: Checkout code
@@ -29,8 +31,18 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: terraform destroy
+        run: terraform destroy --auto-approve  
+
       - name: Terraform Apply
         run: terraform apply --auto-approve
+      
+      - id: ip_address
+        
+        run: echo ip=$(terraform output instance_ip) >> "$GITHUB_OUTPUT" 
+           
+       
+       
 
       
         
@@ -86,7 +98,7 @@ jobs:
 
           eval `ssh-agent`
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY}}"
-          scp   -r ./* ec2-user@$(terraform output instance_ip):/home/ec2-user/
+          scp   -r ./* ec2-user@${{needs.terraform_deploy.outputs.outputs1}}:/home/ec2-user/
     
-          ssh   ec2-user@$(terraform output instance_ip ) -f ' python setup.py install'
+          ssh   ec2-user@${{needs.terraform_deploy.outputs.outputs1}} -f ' python setup.py install'
           
