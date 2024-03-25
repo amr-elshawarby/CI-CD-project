@@ -39,7 +39,13 @@ jobs:
       
       - id: ip_address
         
-        run: echo ip=$(terraform output instance_ip) >> "$GITHUB_OUTPUT" 
+        run: | 
+            terraform output instance_ip
+            echo "$GITHUB_OUTPUT"
+            cat "$GITHUB_OUTPUT"
+            echo ip=$(terraform output instance_ip)
+            echo ip=$(terraform output instance_ip) > ip 
+            cat ip >> "$GITHUB_OUTPUT" 
            
        
        
