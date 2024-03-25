@@ -19,7 +19,8 @@ resource "aws_security_group" "ssh_access" {
   }
 }
 data "aws_key_pair" "existing_key_pair" {
-  key_name = "Amrkeypair"  
+  key_name = "Amrkeypair"
+  public_key = file("E:sshkey")  
 }
 
 resource "aws_instance" "my-ec2"{
