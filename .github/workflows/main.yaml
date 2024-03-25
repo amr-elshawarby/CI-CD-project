@@ -32,10 +32,7 @@ jobs:
       - name: Terraform Apply
         run: terraform apply --auto-approve
 
-      # Retrieve EC2 instance IP using dynamic inventory
-      - name: Get EC2 instance IP
-        id: ec2
-        run: echo "::set-output name=ip_address::$(terraform output -json instance_ip | jq -r '.')"
+      
         
   test-and-package:
     runs-on: ubuntu-latest
@@ -89,7 +86,7 @@ jobs:
 
           eval `ssh-agent`
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY}}"
-          scp   -r ./* ec2-user@${{ steps.ec2.outputs.ip_address }}: /home/ec2-user/
+          scp   -r ./* ec2-user@$(terraform output instance_ip):/home/ec2-user/
     
-          ssh   ec2-user@${{ steps.ec2.outputs.ip_address }} 'cd /home/ec2-user/ && python setup.py install'
+          ssh   ec2-user@$(terraform output instance_ip ) -f ' python setup.py install'
           
