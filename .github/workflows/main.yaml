@@ -40,7 +40,7 @@ jobs:
       - id: ip_address
         
         run: | 
-            terraform-bin output instance_ip >ip
+            terraform-bin output instance_ip |tr "\"" "\0" >ip
             echo ip=$(cat ip) >> "$GITHUB_OUTPUT" 
            
        
