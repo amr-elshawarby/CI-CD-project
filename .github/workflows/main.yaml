@@ -64,10 +64,7 @@ jobs:
       - name: Install SSH client
         run: sudo apt-get install -y openssh-client    
 
-      - name: Create virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
+      
 
       - name: Install dependencies
         run: |
@@ -113,7 +110,7 @@ jobs:
           port: 22
           script: |
             cd app
-            source venv/bin/activate
+           
             sudo python3 setup.py install
           
         
