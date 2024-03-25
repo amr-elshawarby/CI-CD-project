@@ -110,7 +110,7 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           port: 22
           script: |
-            mkdir app
+            whoami
            
             sudo python3 setup.py install
           
