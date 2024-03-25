@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Provision EC2 with Terraform
     outputs:
-      output1: ${{ steps.ip_address.output.ip }}
+      output1: ${{ steps.ip_address.outputs.ip }}
 
     steps:
       - name: Checkout code
