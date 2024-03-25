@@ -99,7 +99,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ needs.terraform_deploy.outputs.output1 }}
-          username: ec2_user
+          username: ec2-user
           key: ${{  secrets.SSH_PRIVATE_KEY}}
           port: 22
           source: .
@@ -108,7 +108,7 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{needs.terraform_deploy.outputs.output1}}
-          username: ec2_user
+          username: ec2-user
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
