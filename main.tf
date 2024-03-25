@@ -1,7 +1,4 @@
-resource "aws_key_pair" "my_keypair" {
-  key_name   = "my-keypair"
-  public_key = file("~/.ssh/id_rsa.pub")  # Path to your SSH public key
-}
+
 
 resource "aws_security_group" "ssh_access" {
   name        = "ssh-access"
@@ -25,7 +22,7 @@ resource "aws_security_group" "ssh_access" {
 resource "aws_instance" "my-ec2"{
     ami= var.image
     instance_type= var.instance_type
-    key_name        = aws_key_pair.my_keypair.key_name  
+      
     security_groups = [aws_security_group.ssh_access.name] 
     
 }
