@@ -18,11 +18,14 @@ resource "aws_security_group" "ssh_access" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+data "aws_key_pair" "existing_key_pair" {
+  key_name = "Amrkeypair"  
+}
 
 resource "aws_instance" "my-ec2"{
     ami= var.image
     instance_type= var.instance_type
-      
+    key_name      = data.aws_key_pair.existing_key_pair.key_name
     security_groups = [aws_security_group.ssh_access.name] 
     
 }
