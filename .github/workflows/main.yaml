@@ -86,7 +86,9 @@ jobs:
 
       - name: Deploy code to EC2
         run: |
-          scp -i ${{ secrets.SSH_PRIVATE_KEY }} -r ./* ec2-user@${{ steps.ec2.outputs.ip_address }}: /home/ec2-user/
+          ssh-add -<<< "{{$secrets.SSH_PRIVATE_KEY}}"
+          scp   -r ./* ec2-user@${{ steps.ec2.outputs.ip_address }}: /home/ec2-user/
     
-          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ec2-user@${{ steps.ec2.outputs.ip_address }} 'cd /home/ec2-user/ && python setup.py install'
+          ssh   ec2-user@${{ steps.ec2.outputs.ip_address }} 'cd /home/ec2-user/ && python setup.py install'
+          
           
