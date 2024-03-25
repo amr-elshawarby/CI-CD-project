@@ -101,7 +101,7 @@ jobs:
           key: ${{  secrets.SSH_PRIVATE_KEY}}
           port: 22
           source: .
-          target: .
+          target: App
       - name: depoly ec2 
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -110,9 +110,9 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           port: 22
           script: |
-            whoami
+            cd App
            
-            sudo  pip install .
+            python setup.py
           
         
               
