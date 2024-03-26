@@ -102,7 +102,7 @@ jobs:
           port: 22
           source: .
           target: App
-      - name: depoly ec2 
+      - name: run ec2 
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{needs.terraform_deploy.outputs.output1}}
@@ -112,7 +112,7 @@ jobs:
           script: |
             cd App
            
-            python setup.py
+            python3 setup.py
           
         
               
